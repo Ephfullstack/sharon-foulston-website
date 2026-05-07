@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sharon Foulston — Speaker · Advocate · Author</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    /* ─── TOKENS ─────────────────────────────────── */
+    :root {
+      --navy:       #0E2841;
+      --navy-mid:   #1A3A5C;
+      --steel:      #156082;
+      --orange:     #E97132;
+      --orange-dk:  #C4581A;
+      --cream:      #F7F4EF;
+      --warm-white: #FDFCF9;
+      --text:       #1C1A18;
+      --text-muted: #6B6460;
+      --grey:       #E8E5E0;
+      --grey-dark:  #C8C4BE;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans:  'Jost', sans-serif;
+      --mono:  'Space Mono', monospace;
+      --max: 1200px;
+      --pad: clamp(24px, 5vw, 80px);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--warm-white); color: var(--text); overflow-x: hidden; line-height: 1.7; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+    .label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+
+    /* ─── REVEAL ─────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.12s; }
+    .reveal-delay-2 { transition-delay: 0.24s; }
+    .reveal-delay-3 { transition-delay: 0.36s; }
+
+    /* ═══ NAV ═══ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 24px var(--pad);
+      display: flex; justify-content: space-between; align-items: center;
+      transition: background 0.4s, padding 0.4s, box-shadow 0.4s;
+    }
+    .nav.scrolled {
+      background: rgba(14,40,65,0.97);
+      backdrop-filter: blur(12px);
+      padding: 16px var(--pad);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .nav-logo { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; color: #fff; letter-spacing: 0.02em; }
+    .nav-logo span { font-weight: 300; font-style: italic; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.7); transition: color 0.2s; }
+    .nav-links a:hover { color: #fff; }
+    .nav-cta { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); background: var(--orange); padding: 10px 22px; border-radius: 2px; transition: background 0.2s, transform 0.2s; }
+    .nav-cta:hover { background: var(--orange-dk); transform: translateY(-1px); }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-hamburger span { display: block; width: 24px; height: 1.5px; background: #fff; }
+
+    /* ═══ HERO ═══ */
+    .hero {
+      min-height: 100vh; background: var(--navy);
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative; overflow: hidden;
+      padding: 120px var(--pad) 80px;
+    }
+    .hero::before {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 45%;
+      background: linear-gradient(to top, rgba(21,96,130,0.18), transparent);
+      pointer-events: none;
+    }
+    .hero-horizon {
+      position: absolute; top: 58%; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(21,96,130,0.4) 20%, rgba(21,96,130,0.4) 80%, transparent 100%);
+    }
+    /* subtle horizon dots */
+    .hero-horizon::after {
+      content: '';
+      position: absolute;
+      top: -2px; left: 50%; transform: translateX(-50%);
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--orange);
+      opacity: 0.6;
+    }
+    .hero-inner { position: relative; z-index: 2; max-width: 900px; }
+    .hero-descriptor {
+      font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 28px;
+      opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards;
+    }
+    .hero-heading {
+      font-family: var(--serif); font-size: clamp(3rem, 7.5vw, 7rem); font-weight: 300;
+      line-height: 1.05; color: #fff; letter-spacing: -0.02em; margin-bottom: 36px;
+      opacity: 0; animation: fadeUp 0.9s ease 0.5s forwards;
+    }
+    .hero-heading em { font-style: italic; color: rgba(255,255,255,0.55); }
+    .hero-quote {
+      font-family: var(--serif); font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 300;
+      font-style: italic; color: rgba(255,255,255,0.55); max-width: 580px; line-height: 1.75;
+      margin-bottom: 52px; border-left: 2px solid var(--steel); padding-left: 24px;
+      opacity: 0; animation: fadeUp 0.9s ease 0.7s forwards;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.9s ease 0.9s forwards; }
+    .btn-primary {
+      display: inline-block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #fff; background: var(--orange);
+      padding: 14px 32px; border-radius: 2px; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { background: var(--orange-dk); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(233,113,50,0.3); }
+    .btn-ghost {
+      display: inline-block; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.75); padding: 14px 32px;
+      border-radius: 2px; border: 1px solid rgba(255,255,255,0.2);
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.6); color: #fff; transform: translateY(-2px); }
+    .hero-scroll {
+      position: absolute; bottom: 36px; left: var(--pad);
+      display: flex; align-items: center; gap: 12px;
+      opacity: 0; animation: fadeUp 0.9s ease 1.2s forwards;
+    }
+    .hero-scroll-line { width: 40px; height: 1px; background: rgba(255,255,255,0.2); position: relative; overflow: hidden; }
+    .hero-scroll-line::after {
+      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: var(--orange); animation: slideLine 2.2s ease 1.5s infinite;
+    }
+    .hero-scroll-text { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideLine { 0% { left: -100%; } 50%, 100% { left: 100%; } }
+
+    /* ═══ MARQUEE ═══ */
+    .marquee-strip { background: var(--orange); padding: 13px 0; overflow: hidden; }
+    .marquee-track-outer { display: flex; overflow: hidden; }
+    .marquee-track { display: flex; gap: 0; animation: marquee 35s linear infinite; white-space: nowrap; flex-shrink: 0; }
+    .marquee-track span {
+      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--navy); font-weight: 700;
+      padding: 0 40px;
+    }
+    .marquee-track span::after { content: '◆'; margin-left: 40px; opacity: 0.4; font-size: 7px; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* ═══ CONNECTION ═══ */
+    .connection { background: var(--cream); padding: 110px 0; }
+    .connection-header { text-align: center; margin-bottom: 64px; }
+    .connection-header h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; color: var(--navy); margin-bottom: 14px; letter-spacing: -0.01em; }
+    .connection-header h2 em { font-style: italic; color: var(--steel); }
+    .connection-header p { font-size: 1rem; color: var(--text-muted); max-width: 460px; margin: 0 auto; }
+    .connection-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+    .connection-card {
+      background: var(--warm-white); padding: 48px 32px;
+      border-top: 3px solid var(--grey-dark);
+      position: relative; overflow: hidden; cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .connection-card:nth-child(odd) { border-top-color: var(--orange); }
+    .connection-card:nth-child(even) { border-top-color: var(--steel); }
+    .cc-bg {
+      position: absolute; inset: 0; background: var(--navy);
+      transform: translateY(100%); transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+      z-index: 0;
+    }
+    .connection-card:hover .cc-bg { transform: translateY(0); }
+    .connection-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(14,40,65,0.14); }
+    .cc-inner { position: relative; z-index: 1; }
+    .cc-num { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.2em; color: var(--grey-dark); margin-bottom: 24px; display: block; transition: color 0.3s; }
+    .connection-card:hover .cc-num { color: rgba(255,255,255,0.3); }
+    .cc-icon { font-size: 1.6rem; margin-bottom: 20px; display: block; line-height: 1; }
+    .cc-title { font-family: var(--serif); font-size: 1.35rem; font-weight: 500; color: var(--navy); margin-bottom: 12px; line-height: 1.3; transition: color 0.3s; }
+    .connection-card:hover .cc-title { color: #fff; }
+    .cc-body { font-size: 0.88rem; line-height: 1.75; color: var(--text-muted); transition: color 0.3s; }
+    .connection-card:hover .cc-body { color: rgba(255,255,255,0.6); }
+    .cc-arrow { margin-top: 28px; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); font-weight: 600; display: flex; align-items: center; gap: 8px; transition: gap 0.2s; }
+    .connection-card:hover .cc-arrow { gap: 14px; }
+
+    /* ═══ ABOUT ═══ */
+    .about { padding: 120px 0; background: var(--warm-white); }
+    .about-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 80px; align-items: start; }
+    .about-image-wrap { position: relative; padding-top: 32px; }
+    .about-image-wrap::before {
+      content: ''; position: absolute; top: 0; left: 20px;
+      width: calc(100% - 20px); height: 100%;
+      border: 1px solid var(--grey); z-index: 0;
+    }
+    .about-image-frame { position: relative; aspect-ratio: 3/4; overflow: hidden; z-index: 1; }
+    .about-image-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(150deg, var(--navy) 0%, var(--navy-mid) 50%, #0a1e32 100%);
+      display: flex; align-items: flex-end; padding: 36px;
+    }
+    .about-image-placeholder-text { font-family: var(--serif); font-size: 1rem; font-style: italic; color: rgba(255,255,255,0.4); line-height: 1.7; }
+    /* wave marks on placeholder */
+    .about-image-placeholder::before {
+      content: '';
+      position: absolute; top: 40%; left: 0; right: 0; height: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+    .about-image-caption { margin-top: 16px; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+    .about-content { padding-top: 20px; }
+    .about-label { margin-bottom: 20px; }
+    .about-heading { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 300; line-height: 1.12; color: var(--navy); letter-spacing: -0.01em; margin-bottom: 32px; }
+    .about-heading em { font-style: italic; color: var(--steel); }
+    .about-body { font-size: 1rem; line-height: 1.85; color: var(--text-muted); margin-bottom: 20px; }
+    .about-body strong { color: var(--text); font-weight: 500; }
+    .about-quote { margin: 40px 0; padding: 28px 32px; background: var(--cream); border-left: 3px solid var(--orange); }
+    .about-quote p { font-family: var(--serif); font-size: 1.2rem; font-style: italic; font-weight: 300; color: var(--navy); line-height: 1.6; }
+    .about-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 44px; }
+    .about-fact { padding: 24px 20px; border-top: 1px solid var(--grey); }
+    .about-fact:nth-child(odd) { border-right: 1px solid var(--grey); }
+    .about-fact-num { font-family: var(--serif); font-size: 2.2rem; font-weight: 300; color: var(--orange); line-height: 1; margin-bottom: 4px; }
+    .about-fact-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
+
+    /* ═══ PULL QUOTE ═══ */
+    .pull-quote-section { background: var(--cream); padding: 100px 0; }
+    .pull-quote-inner { max-width: 820px; margin: 0 auto; text-align: center; }
+    .pull-quote-mark { font-family: var(--serif); font-size: 6rem; line-height: 0.6; color: var(--orange); opacity: 0.25; margin-bottom: 8px; display: block; }
+    .pull-quote-text { font-family: var(--serif); font-size: clamp(1.5rem, 3.5vw, 2.4rem); font-weight: 300; font-style: italic; color: var(--navy); line-height: 1.5; margin-bottom: 32px; }
+    .pull-quote-attr { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+
+    /* ═══ FRAMEWORK ═══ */
+    .framework { background: var(--navy); padding: 120px 0; position: relative; overflow: hidden; }
+    .framework::before { content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 80px; background: linear-gradient(to bottom, var(--warm-white), transparent); }
+    .framework::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 80px; background: linear-gradient(to top, var(--cream), transparent); }
+    .fw-horizon { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.03); pointer-events: none; }
+    .framework-header { text-align: center; margin-bottom: 80px; position: relative; z-index: 2; }
+    .framework-header .label { color: rgba(255,255,255,0.3); margin-bottom: 20px; display: block; }
+    .framework-header h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; color: #fff; letter-spacing: -0.01em; margin-bottom: 18px; }
+    .framework-header h2 em { font-style: italic; color: rgba(255,255,255,0.4); }
+    .framework-header p { font-size: 1rem; color: rgba(255,255,255,0.45); max-width: 500px; margin: 0 auto; }
+    .framework-stages { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,0.07); position: relative; z-index: 2; }
+    .stage { background: var(--navy); padding: 52px 36px; position: relative; transition: background 0.4s; }
+    .stage:hover { background: var(--navy-mid); }
+    .stage-num { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.18); margin-bottom: 28px; display: block; }
+    .stage-bar { width: 36px; height: 2px; background: var(--orange); margin-bottom: 28px; transition: width 0.4s; }
+    .stage:hover .stage-bar { width: 56px; }
+    .stage-name { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; color: #fff; margin-bottom: 18px; }
+    .stage-body { font-size: 0.9rem; line-height: 1.8; color: rgba(255,255,255,0.45); margin-bottom: 24px; }
+    .stage-quote { font-family: var(--serif); font-size: 0.9rem; font-style: italic; color: rgba(255,255,255,0.25); line-height: 1.65; border-top: 1px solid rgba(255,255,255,0.07); padding-top: 20px; }
+    .stage:not(:last-child)::after { content: '→'; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.12); font-size: 1rem; z-index: 3; }
+
+    /* ═══ SPEAKING ═══ */
+    .speaking { padding: 120px 0; background: var(--warm-white); }
+    .speaking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .speaking-content .label { margin-bottom: 20px; display: block; }
+    .speaking-content h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; color: var(--navy); line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 24px; }
+    .speaking-content h2 em { font-style: italic; color: var(--steel); }
+    .speaking-content > p { font-size: 1rem; line-height: 1.85; color: var(--text-muted); margin-bottom: 40px; }
+    .speaking-topics { list-style: none; }
+    .speaking-topic { display: flex; gap: 20px; padding: 22px 0; border-bottom: 1px solid var(--grey); }
+    .speaking-topic:first-child { border-top: 1px solid var(--grey); }
+    .topic-num { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.15em; color: var(--orange); padding-top: 4px; flex-shrink: 0; }
+    .topic-content h3 { font-family: var(--serif); font-size: 1.15rem; font-weight: 500; color: var(--navy); margin-bottom: 4px; }
+    .topic-content p { font-size: 0.87rem; color: var(--text-muted); margin: 0; line-height: 1.65; }
+    .speaking-right { padding-top: 16px; }
+    .audiences-label { margin-bottom: 22px; }
+    .audience-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 48px; }
+    .audience-tag { font-size: 0.8rem; font-weight: 500; padding: 8px 16px; background: var(--cream); border: 1px solid var(--grey); color: var(--navy); border-radius: 2px; transition: background 0.2s, border-color 0.2s; }
+    .audience-tag:hover { background: var(--grey); border-color: var(--grey-dark); }
+    .speaking-cta-box { background: var(--navy); padding: 44px; position: relative; overflow: hidden; }
+    .speaking-cta-box::before { content: ''; position: absolute; top: -40px; right: -40px; width: 140px; height: 140px; background: var(--steel); opacity: 0.1; border-radius: 50%; }
+    .speaking-cta-box h3 { font-family: var(--serif); font-size: 1.7rem; font-weight: 400; color: #fff; margin-bottom: 12px; line-height: 1.2; }
+    .speaking-cta-box p { font-size: 0.9rem; color: rgba(255,255,255,0.5); margin-bottom: 28px; line-height: 1.75; }
+
+    /* ═══ QUOTES GRID ═══ */
+    .quotes-strip { background: var(--cream); padding: 100px 0; }
+    .quotes-header { text-align: center; margin-bottom: 60px; }
+    .quotes-header .label { margin-bottom: 16px; display: block; }
+    .quotes-header h2 { font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 300; color: var(--navy); letter-spacing: -0.01em; }
+    .quotes-header h2 em { font-style: italic; }
+    .quotes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .quote-card { background: var(--warm-white); padding: 44px 36px; position: relative; border-top: 2px solid transparent; transition: border-color 0.3s; }
+    .quote-card:hover { border-top-color: var(--orange); }
+    .quote-card::before { content: '"'; font-family: var(--serif); font-size: 4.5rem; color: var(--orange); opacity: 0.12; position: absolute; top: 16px; left: 28px; line-height: 1; }
+    .quote-card p { font-family: var(--serif); font-size: 1.05rem; font-style: italic; font-weight: 300; color: var(--navy); line-height: 1.75; position: relative; z-index: 1; }
+
+    /* ═══ RESOURCES ═══ */
+    .resources { padding: 120px 0; background: var(--warm-white); }
+    .resources-header { text-align: center; margin-bottom: 72px; }
+    .resources-header .label { margin-bottom: 16px; display: block; }
+    .resources-header h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; color: var(--navy); letter-spacing: -0.01em; }
+    .resources-header h2 em { font-style: italic; }
+    .resources-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+    .resource-card { padding: 56px 52px; position: relative; overflow: hidden; }
+    .resource-card.light { background: var(--cream); }
+    .resource-card.dark { background: var(--navy); }
+    .resource-card-tag { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 28px; display: block; }
+    .resource-card.light .resource-card-tag { color: var(--orange); }
+    .resource-card.dark .resource-card-tag { color: rgba(255,255,255,0.35); }
+    .resource-card h3 { font-family: var(--serif); font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 300; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 18px; }
+    .resource-card.light h3 { color: var(--navy); }
+    .resource-card.dark h3 { color: #fff; }
+    .resource-card p { font-size: 0.95rem; line-height: 1.8; margin-bottom: 36px; }
+    .resource-card.light p { color: var(--text-muted); }
+    .resource-card.dark p { color: rgba(255,255,255,0.45); }
+    .btn-ghost-dk {
+      display: inline-block; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.7); padding: 13px 28px;
+      border-radius: 2px; border: 1px solid rgba(255,255,255,0.2);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost-dk:hover { border-color: rgba(255,255,255,0.55); color: #fff; }
+    .rc-rings {
+      position: absolute; bottom: -30px; right: -30px;
+      width: 180px; height: 180px; border-radius: 50%;
+      pointer-events: none;
+    }
+    .rc-rings::before, .rc-rings::after { content: ''; position: absolute; border-radius: 50%; }
+    .resource-card.dark .rc-rings { border: 1px solid rgba(255,255,255,0.05); }
+    .resource-card.dark .rc-rings::before { inset: 22px; border: 1px solid rgba(255,255,255,0.05); }
+    .resource-card.dark .rc-rings::after { inset: 44px; border: 1px solid rgba(255,255,255,0.05); }
+    .resource-card.light .rc-rings { border: 1px solid rgba(14,40,65,0.07); }
+    .resource-card.light .rc-rings::before { inset: 22px; border: 1px solid rgba(14,40,65,0.07); }
+    .resource-card.light .rc-rings::after { inset: 44px; border: 1px solid rgba(14,40,65,0.07); }
+
+    /* ═══ TESTIMONIALS ═══ */
+    .testimonials { background: var(--cream); padding: 100px 0; }
+    .testimonials-header { text-align: center; margin-bottom: 64px; }
+    .testimonials-header .label { margin-bottom: 16px; display: block; }
+    .testimonials-header h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; color: var(--navy); letter-spacing: -0.01em; }
+    .testimonials-header h2 em { font-style: italic; color: var(--steel); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .testimonial-card { background: var(--warm-white); padding: 40px 36px; display: flex; flex-direction: column; }
+    .testimonial-stars { color: var(--orange); font-size: 0.75rem; letter-spacing: 4px; margin-bottom: 24px; }
+    .testimonial-text { font-family: var(--serif); font-size: 1rem; font-style: italic; font-weight: 300; color: var(--navy); line-height: 1.8; flex-grow: 1; margin-bottom: 28px; }
+    .testimonial-author { border-top: 1px solid var(--grey); padding-top: 20px; }
+    .testimonial-name { font-weight: 600; font-size: 0.88rem; color: var(--text); margin-bottom: 2px; }
+    .testimonial-role { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+
+    /* ═══ BOOKING CTA ═══ */
+    .booking { background: var(--navy); padding: 120px 0; position: relative; overflow: hidden; text-align: center; }
+    .booking-glow {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 25% 50%, rgba(21,96,130,0.22) 0%, transparent 55%),
+                  radial-gradient(ellipse at 75% 50%, rgba(21,96,130,0.15) 0%, transparent 55%);
+    }
+    .booking-horizon { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.04); }
+    .booking-inner { position: relative; z-index: 2; max-width: 680px; margin: 0 auto; }
+    .booking .label { margin-bottom: 24px; display: block; color: rgba(255,255,255,0.3); }
+    .booking h2 { font-family: var(--serif); font-size: clamp(2.4rem, 5.5vw, 4.5rem); font-weight: 300; color: #fff; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 24px; }
+    .booking h2 em { font-style: italic; color: rgba(255,255,255,0.45); }
+    .booking p { font-size: 1rem; color: rgba(255,255,255,0.45); max-width: 480px; margin: 0 auto 52px; line-height: 1.85; }
+    .booking-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* ═══ FOOTER ═══ */
+    .footer { background: #060D15; padding: 72px 0 32px; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; padding-bottom: 52px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 32px; }
+    .footer-brand h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: #fff; margin-bottom: 12px; }
+    .footer-brand > p { font-size: 0.88rem; line-height: 1.8; color: rgba(255,255,255,0.35); max-width: 240px; margin-bottom: 28px; }
+    .footer-social { display: flex; gap: 10px; }
+    .footer-social a {
+      width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-family: var(--mono); color: rgba(255,255,255,0.35);
+      text-transform: uppercase; letter-spacing: 0.05em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .footer-social a:hover { border-color: var(--orange); color: var(--orange); }
+    .footer-col h4 { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.18); margin-bottom: 20px; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 10px; }
+    .footer-col a { font-size: 0.88rem; color: rgba(255,255,255,0.4); transition: color 0.2s; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .footer-copy { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+    .footer-descriptor { font-family: var(--serif); font-style: italic; font-size: 0.88rem; color: rgba(255,255,255,0.15); }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 1024px) {
+      .connection-cards { grid-template-columns: repeat(2, 1fr); }
+      .framework-stages { grid-template-columns: repeat(2, 1fr); }
+      .stage:nth-child(2)::after,
+      .stage:nth-child(4)::after { display: none; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .about-image-wrap { max-width: 380px; }
+      .speaking-grid { grid-template-columns: 1fr; gap: 56px; }
+      .quotes-grid { grid-template-columns: 1fr; }
+      .resources-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 40px; }
+    }
+    @media (max-width: 520px) {
+      .connection-cards { grid-template-columns: 1fr; }
+      .framework-stages { grid-template-columns: 1fr; }
+      .stage::after { display: none !important; }
+      .about-facts { grid-template-columns: 1fr; }
+      .about-fact:nth-child(odd) { border-right: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="#home" class="nav-logo">Sharon <span>Foulston</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#framework">The Return</a></li>
+      <li><a href="#speaking">Speaking</a></li>
+      <li><a href="#resources">Resources</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Book Sharon</a>
+    <button class="nav-hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-horizon"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <p class="hero-descriptor">Speaker · Advocate · Author</p>
+        <h1 class="hero-heading">
+          The self you lost<br>
+          is waiting to be<br>
+          <em>remembered.</em>
+        </h1>
+        <p class="hero-quote">
+          "After the worst thing imaginable, everyone can pick themselves up, dust themselves off, and get on with it."
+        </p>
+        <div class="hero-actions">
+          <a href="#framework" class="btn-primary">Discover The Return</a>
+          <a href="#speaking" class="btn-ghost">Book a Talk</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      <span class="hero-scroll-text">Scroll</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track-outer">
+      <div class="marquee-track">
+        <span>Speaker</span><span>Grief &amp; Identity</span><span>Women's Leadership</span>
+        <span>The Return Framework</span><span>Corporate Wellbeing</span><span>Authentic Recovery</span>
+        <span>Author</span><span>Advocate</span><span>Keynote</span><span>Wales</span>
+        <span>Speaker</span><span>Grief &amp; Identity</span><span>Women's Leadership</span>
+        <span>The Return Framework</span><span>Corporate Wellbeing</span><span>Authentic Recovery</span>
+        <span>Author</span><span>Advocate</span><span>Keynote</span><span>Wales</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONNECTION -->
+  <section class="connection" id="start">
+    <div class="container">
+      <div class="connection-header reveal">
+        <h2>What brought you <em>here?</em></h2>
+        <p>Sharon's work meets people wherever they are. Find your path in.</p>
+      </div>
+      <div class="connection-cards">
+        <div class="connection-card reveal">
+          <div class="cc-bg"></div>
+          <div class="cc-inner">
+            <span class="cc-num">01 —</span>
+            <span class="cc-icon">🌊</span>
+            <h3 class="cc-title">I've lost myself somewhere along the way</h3>
+            <p class="cc-body">You're functional. Successful, even. But something quiet and essential has gone missing — and you've stopped expecting to find it.</p>
+            <p class="cc-arrow">Find your way back →</p>
+          </div>
+        </div>
+        <div class="connection-card reveal reveal-delay-1">
+          <div class="cc-bg"></div>
+          <div class="cc-inner">
+            <span class="cc-num">02 —</span>
+            <span class="cc-icon">🌿</span>
+            <h3 class="cc-title">I'm carrying grief I've never named</h3>
+            <p class="cc-body">Grief isn't only about death. It's the loss of a self, a future, a version of the life you thought you were building.</p>
+            <p class="cc-arrow">Name what you've lost →</p>
+          </div>
+        </div>
+        <div class="connection-card reveal reveal-delay-2">
+          <div class="cc-bg"></div>
+          <div class="cc-inner">
+            <span class="cc-num">03 —</span>
+            <span class="cc-icon">🧭</span>
+            <h3 class="cc-title">I'm ready to stop performing</h3>
+            <p class="cc-body">The mask has been useful. But it doesn't fit anymore. The moment it stops fitting is not a catastrophe — it's an invitation.</p>
+            <p class="cc-arrow">Begin the return →</p>
+          </div>
+        </div>
+        <div class="connection-card reveal reveal-delay-3">
+          <div class="cc-bg"></div>
+          <div class="cc-inner">
+            <span class="cc-num">04 —</span>
+            <span class="cc-icon">🎤</span>
+            <h3 class="cc-title">I'm looking for a speaker</h3>
+            <p class="cc-body">Sharon speaks to women's networks, corporate wellbeing teams, grief organisations, and educational institutions worldwide.</p>
+            <p class="cc-arrow">Explore speaking →</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-image-wrap reveal">
+          <div class="about-image-frame">
+            <div class="about-image-placeholder">
+              <p class="about-image-placeholder-text">
+                "I didn't cross<br>the North Sea<br>to prove something.<br><br>
+                I crossed it<br>to find someone."
+              </p>
+            </div>
+          </div>
+          <p class="about-image-caption">Sharon Foulston · Solo North Sea crossing · aboard Sophie</p>
+        </div>
+        <div class="about-content">
+          <p class="label about-label">About Sharon</p>
+          <h2 class="about-heading reveal">A life rebuilt — not<br>from scratch, but<br>from <em>memory.</em></h2>
+          <p class="about-body reveal reveal-delay-1">Sharon Foulston is a grief and identity speaker who helps people <strong>recover the self they lost</strong> — not through crisis, but through the long, quiet years that followed one.</p>
+          <p class="about-body reveal reveal-delay-1">Her story is shaped by parental loss at the age of identity formation, the unexpected complexity of sudden wealth arriving alongside grief, and years of high-performing life that was nonetheless quietly hollow. The turning point came not in a therapist's chair — but on the open sea.</p>
+          <div class="about-quote reveal reveal-delay-2">
+            <p>"I was functional. But I wasn't alive. And the worst part is — I'd been that way so long I'd stopped noticing the difference."</p>
+          </div>
+          <p class="about-body reveal reveal-delay-2">Sharon's talks are drawn from lived experience, not theory. She speaks with <strong>the directness of someone who has been there</strong> and the warmth of someone who knows how long the quiet middle really lasts.</p>
+          <div class="about-facts reveal reveal-delay-3">
+            <div class="about-fact">
+              <p class="about-fact-num">3</p>
+              <p class="about-fact-label">Signature talks</p>
+            </div>
+            <div class="about-fact">
+              <p class="about-fact-num">6+</p>
+              <p class="about-fact-label">Audience sectors</p>
+            </div>
+            <div class="about-fact">
+              <p class="about-fact-num">1</p>
+              <p class="about-fact-label">North Sea solo crossing</p>
+            </div>
+            <div class="about-fact">
+              <p class="about-fact-num">∞</p>
+              <p class="about-fact-label">One decision at a time</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PULL QUOTE -->
+  <section class="pull-quote-section">
+    <div class="container">
+      <div class="pull-quote-inner reveal">
+        <span class="pull-quote-mark">"</span>
+        <p class="pull-quote-text">The mask is very useful, until it isn't. The moment it stops fitting is not a catastrophe. It is an invitation.</p>
+        <p class="pull-quote-attr">— Sharon Foulston</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FRAMEWORK -->
+  <section class="framework" id="framework">
+    <div class="fw-horizon"></div>
+    <div class="container">
+      <div class="framework-header">
+        <span class="label">A signature methodology</span>
+        <h2>The Return <em>Framework™</em></h2>
+        <p>Four stages that name what really happened — and what it takes to come back to yourself.</p>
+      </div>
+      <div class="framework-stages">
+        <div class="stage reveal">
+          <span class="stage-num">Stage 01</span>
+          <div class="stage-bar"></div>
+          <h3 class="stage-name">The Fracture</h3>
+          <p class="stage-body">Identifying the original loss — and the secondary losses it quietly created in the years that followed. Not just what happened, but what it took with it.</p>
+          <p class="stage-quote">"Grief is not only losing someone. It is losing anything precious — a self, a future, a version of the life you thought you were building."</p>
+        </div>
+        <div class="stage reveal reveal-delay-1">
+          <span class="stage-num">Stage 02</span>
+          <div class="stage-bar"></div>
+          <h3 class="stage-name">The Shell</h3>
+          <p class="stage-body">Naming the long middle. The constructed self. The masks and distractions that kept life functional — and kept everything real at arm's length.</p>
+          <p class="stage-quote">"I was functional. But I wasn't alive."</p>
+        </div>
+        <div class="stage reveal reveal-delay-2">
+          <span class="stage-num">Stage 03</span>
+          <div class="stage-bar"></div>
+          <h3 class="stage-name">The Crack</h3>
+          <p class="stage-body">The moment — or moments — that made ignoring the inner self impossible. Not always dramatic. Often quiet. Always undeniable.</p>
+          <p class="stage-quote">"The moment it stops fitting is not a catastrophe. It is an invitation."</p>
+        </div>
+        <div class="stage reveal reveal-delay-3">
+          <span class="stage-num">Stage 04</span>
+          <div class="stage-bar"></div>
+          <h3 class="stage-name">The Return</h3>
+          <p class="stage-body">The active, deliberate work of coming back. Simplifying. Nature. Presence. One decision at a time.</p>
+          <p class="stage-quote">"I didn't reinvent myself. I remembered myself. All it took was the sea, some silence, and the willingness to stop running."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPEAKING -->
+  <section class="speaking" id="speaking">
+    <div class="container">
+      <div class="speaking-grid">
+        <div class="speaking-content">
+          <span class="label">From the stage</span>
+          <h2 class="reveal">Talks that <em>name</em> what<br>others leave unsaid</h2>
+          <p class="reveal reveal-delay-1">Grounded in story, not theory — and free of therapy-speak. Designed for professional audiences who are sceptical of optimism but hungry for honest insight.</p>
+          <ul class="speaking-topics">
+            <li class="speaking-topic reveal reveal-delay-1">
+              <span class="topic-num">01</span>
+              <div class="topic-content">
+                <h3>After the Worst Thing</h3>
+                <p>Sharon's flagship keynote. Grief, identity loss, and the long road back — told through lived experience and the open sea.</p>
+              </div>
+            </li>
+            <li class="speaking-topic reveal reveal-delay-2">
+              <span class="topic-num">02</span>
+              <div class="topic-content">
+                <h3>The Mask and the Self</h3>
+                <p>How high-performers build lives that look like success and feel like slow disappearance.</p>
+              </div>
+            </li>
+            <li class="speaking-topic reveal reveal-delay-2">
+              <span class="topic-num">03</span>
+              <div class="topic-content">
+                <h3>One Decision at a Time</h3>
+                <p>Transformation is not a single moment. It is a series of small, compounding choices — and anyone can begin today.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="speaking-right reveal reveal-delay-1">
+          <p class="label audiences-label">Sharon speaks to</p>
+          <div class="audience-tags">
+            <span class="audience-tag">Women's Networks</span>
+            <span class="audience-tag">Leadership Events</span>
+            <span class="audience-tag">Grief Organisations</span>
+            <span class="audience-tag">Corporate Wellbeing</span>
+            <span class="audience-tag">Universities</span>
+            <span class="audience-tag">Faith Communities</span>
+            <span class="audience-tag">Mental Health</span>
+            <span class="audience-tag">Financial Services</span>
+            <span class="audience-tag">Youth Leadership</span>
+          </div>
+          <div class="speaking-cta-box">
+            <h3>Bring Sharon to your event</h3>
+            <p>Available for keynotes, panel conversations, workshops, and intimate leadership sessions. Enquiries handled personally.</p>
+            <a href="#contact" class="btn-primary">Make an Enquiry</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTES -->
+  <section class="quotes-strip">
+    <div class="container">
+      <div class="quotes-header reveal">
+        <span class="label">Her words</span>
+        <h2>Honest. Unhurried. <em>True.</em></h2>
+      </div>
+      <div class="quotes-grid">
+        <div class="quote-card reveal">
+          <p>"I got what I wanted. I didn't get what I needed. And for years, I didn't understand the difference."</p>
+        </div>
+        <div class="quote-card reveal reveal-delay-1">
+          <p>"I didn't cross the North Sea to prove something. I crossed it to find someone. And she was there the whole time."</p>
+        </div>
+        <div class="quote-card reveal reveal-delay-2">
+          <p>"After the worst thing imaginable, everyone can pick themselves up, dust themselves off, and get on with it."</p>
+        </div>
+        <div class="quote-card reveal reveal-delay-1">
+          <p>"Grief is not only losing someone. It is losing anything precious — a self, a future, a version of the life you thought you were building."</p>
+        </div>
+        <div class="quote-card reveal reveal-delay-2">
+          <p>"The mask is very useful, until it isn't. The moment it stops fitting is not a catastrophe. It is an invitation."</p>
+        </div>
+        <div class="quote-card reveal reveal-delay-3">
+          <p>"I was functional. But I wasn't alive. And the worst part is — I'd been that way so long I'd stopped noticing the difference."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section class="resources" id="resources">
+    <div class="container">
+      <div class="resources-header reveal">
+        <span class="label">Resources</span>
+        <h2>Words that <em>stay with you</em></h2>
+      </div>
+      <div class="resources-grid">
+        <div class="resource-card light reveal">
+          <div class="rc-rings"></div>
+          <span class="resource-card-tag">Coming Soon · Book</span>
+          <h3>The Return</h3>
+          <p>Sharon's memoir and practical guide through the four stages of identity recovery. For anyone who has spent years being functional and forgotten how to be alive.</p>
+          <a href="#contact" class="btn-primary">Register Interest</a>
+        </div>
+        <div class="resource-card dark reveal reveal-delay-1">
+          <div class="rc-rings"></div>
+          <span class="resource-card-tag">Coming Soon · Podcast</span>
+          <h3>The Long Middle</h3>
+          <p>Honest conversations about grief, identity, and the quiet years nobody talks about. Real people. Real stories. No optimism for its own sake.</p>
+          <a href="#contact" class="btn-ghost-dk">Join the Waitlist</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="testimonials-header reveal">
+        <span class="label">Voices</span>
+        <h2>What audiences <em>carry home</em></h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <p class="testimonial-stars">★★★★★</p>
+          <p class="testimonial-text">"Sharon spoke at our annual women's leadership summit and the room went completely still. She named things no speaker has ever had the courage to name. Three months on, people are still talking about it."</p>
+          <div class="testimonial-author">
+            <p class="testimonial-name">Sarah M.</p>
+            <p class="testimonial-role">Head of People · Financial Services</p>
+          </div>
+        </div>
+        <div class="testimonial-card reveal reveal-delay-1">
+          <p class="testimonial-stars">★★★★★</p>
+          <p class="testimonial-text">"I came expecting a motivational speaker and found something completely different — and completely necessary. Sharon speaks from inside grief, not from a safe distance. That changes everything."</p>
+          <div class="testimonial-author">
+            <p class="testimonial-name">Dr. Clare H.</p>
+            <p class="testimonial-role">Director · Bereavement Organisation</p>
+          </div>
+        </div>
+        <div class="testimonial-card reveal reveal-delay-2">
+          <p class="testimonial-stars">★★★★★</p>
+          <p class="testimonial-text">"Our students needed someone who had genuinely been through it — not someone with a framework built from other people's stories. Sharon's talk was the most honest thing we've brought to campus in years."</p>
+          <div class="testimonial-author">
+            <p class="testimonial-name">James L.</p>
+            <p class="testimonial-role">Student Wellbeing Lead · University</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING CTA -->
+  <section class="booking" id="contact">
+    <div class="booking-glow"></div>
+    <div class="booking-horizon"></div>
+    <div class="container">
+      <div class="booking-inner reveal">
+        <span class="label">Work with Sharon</span>
+        <h2>Ready to bring <em>honesty</em><br>to your stage?</h2>
+        <p>Sharon is available for keynote speaking, panel conversations, leadership workshops, and media appearances. All enquiries are handled personally.</p>
+        <div class="booking-actions">
+          <a href="mailto:hello@sharonfoulston.com" class="btn-primary">Make a Booking Enquiry</a>
+          <a href="#about" class="btn-ghost">Learn More About Sharon</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <h3>Sharon Foulston</h3>
+          <p>Speaker · Advocate · Author. Grief and identity work rooted in lived experience, not theory.</p>
+          <div class="footer-social">
+            <a href="#" title="LinkedIn">in</a>
+            <a href="#" title="Instagram">ig</a>
+            <a href="#" title="X / Twitter">x</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="#about">About Sharon</a></li>
+            <li><a href="#framework">The Return Framework</a></li>
+            <li><a href="#speaking">Speaking</a></li>
+            <li><a href="#resources">Resources</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Speaking</h4>
+          <ul>
+            <li><a href="#speaking">After the Worst Thing</a></li>
+            <li><a href="#speaking">The Mask and the Self</a></li>
+            <li><a href="#speaking">One Decision at a Time</a></li>
+            <li><a href="#contact">Workshop Format</a></li>
+            <li><a href="#contact">Book a Talk</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#resources">The Return (Book)</a></li>
+            <li><a href="#resources">The Long Middle (Podcast)</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#contact">Media Enquiries</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Sharon Foulston. All rights reserved.</p>
+        <p class="footer-descriptor">Nautical without being literal.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll state
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
