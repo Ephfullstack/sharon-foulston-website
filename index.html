@@ -66,13 +66,16 @@
     /* HERO */
     .hero {
       min-height: 100vh; background: var(--navy);
+      background-image: url('images/IMG_1711.jpeg');
+      background-size: cover;
+      background-position: center 30%;
       display: flex; flex-direction: column; justify-content: center;
       position: relative; overflow: hidden;
       padding: 120px var(--pad) 80px;
     }
     .hero::before {
-      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 45%;
-      background: linear-gradient(to top, rgba(21,96,130,0.18), transparent);
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(14,40,65,0.85) 0%, rgba(14,40,65,0.65) 50%, rgba(14,40,65,0.78) 100%);
       pointer-events: none;
     }
     .hero-horizon {
@@ -190,16 +193,12 @@
       border: 1px solid var(--grey); z-index: 0;
     }
     .about-image-frame { position: relative; aspect-ratio: 3/4; overflow: hidden; z-index: 1; }
-    .about-image-placeholder {
+    .about-real-img {
       width: 100%; height: 100%;
-      background: linear-gradient(150deg, var(--navy) 0%, var(--navy-mid) 50%, #0a1e32 100%);
-      display: flex; align-items: flex-end; padding: 36px;
-    }
-    .about-image-placeholder-text { font-family: var(--serif); font-size: 1rem; font-style: italic; color: rgba(255,255,255,0.4); line-height: 1.7; }
-    .about-image-placeholder::before {
-      content: '';
-      position: absolute; top: 40%; left: 0; right: 0; height: 1px;
-      background: rgba(255,255,255,0.06);
+      object-fit: cover;
+      object-position: center top;
+      transform: rotate(180deg);
+      display: block;
     }
     .about-image-caption { margin-top: 16px; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
     .about-content { padding-top: 20px; }
@@ -217,8 +216,21 @@
     .about-fact-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
 
     /* PULL QUOTE */
-    .pull-quote-section { background: var(--cream); padding: 100px 0; }
-    .pull-quote-inner { max-width: 820px; margin: 0 auto; text-align: center; }
+    .pull-quote-section {
+      background: var(--cream);
+      background-image: url('images/IMG_0836.jpg');
+      background-size: cover;
+      background-position: center 60%;
+      background-attachment: fixed;
+      padding: 100px 0;
+      position: relative;
+    }
+    .pull-quote-section::before {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(247,244,239,0.88);
+      z-index: 0;
+    }
+    .pull-quote-inner { max-width: 820px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
     .pull-quote-mark { font-family: var(--serif); font-size: 6rem; line-height: 0.6; color: var(--orange); opacity: 0.25; margin-bottom: 8px; display: block; }
     .pull-quote-text { font-family: var(--serif); font-size: clamp(1.5rem, 3.5vw, 2.4rem); font-weight: 300; font-style: italic; color: var(--navy); line-height: 1.5; margin-bottom: 32px; }
     .pull-quote-attr { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
@@ -266,6 +278,9 @@
     .speaking-cta-box::before { content: ''; position: absolute; top: -40px; right: -40px; width: 140px; height: 140px; background: var(--steel); opacity: 0.1; border-radius: 50%; }
     .speaking-cta-box h3 { font-family: var(--serif); font-size: 1.7rem; font-weight: 400; color: #fff; margin-bottom: 12px; line-height: 1.2; }
     .speaking-cta-box p { font-size: 0.9rem; color: rgba(255,255,255,0.5); margin-bottom: 28px; line-height: 1.75; }
+    .speaking-photo { margin-top: 36px; position: relative; overflow: hidden; }
+    .speaking-photo img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: center top; display: block; }
+    .speaking-photo-cap { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-top: 10px; }
 
     /* QUOTES GRID */
     .quotes-strip { background: var(--cream); padding: 100px 0; }
@@ -317,6 +332,17 @@
     .resource-card.light .rc-rings { border: 1px solid rgba(14,40,65,0.07); }
     .resource-card.light .rc-rings::before { inset: 22px; border: 1px solid rgba(14,40,65,0.07); }
     .resource-card.light .rc-rings::after { inset: 44px; border: 1px solid rgba(14,40,65,0.07); }
+    .resource-card.dark {
+      background-image: url('images/IMG_6818.jpeg');
+      background-size: cover;
+      background-position: center top;
+    }
+    .resource-card.dark::before {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(14,40,65,0.82);
+      z-index: 0;
+    }
+    .resource-card.dark > * { position: relative; z-index: 1; }
 
     /* TESTIMONIALS */
     .testimonials { background: var(--cream); padding: 100px 0; }
@@ -393,6 +419,18 @@
       color: var(--navy);
       line-height: 1.65;
     }
+    .collective-img-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      margin-top: 36px;
+    }
+    .collective-img-strip img {
+      width: 100%; aspect-ratio: 1/1;
+      object-fit: cover;
+      display: block;
+    }
+    .collective-img-strip img.rotated { transform: rotate(180deg); }
     .collective-right { padding-top: 8px; }
     .collective-tiers {
       display: grid;
@@ -765,14 +803,9 @@
       <div class="about-grid">
         <div class="about-image-wrap reveal">
           <div class="about-image-frame">
-            <div class="about-image-placeholder">
-              <p class="about-image-placeholder-text">
-                "I didn't cross<br>the North Sea<br>to prove something.<br><br>
-                I crossed it<br>to find someone."
-              </p>
-            </div>
+            <img src="images/IMG_0635.jpeg" alt="Sharon Foulston in the hills of Wales" class="about-real-img">
           </div>
-          <p class="about-image-caption">Sharon Foulston · Solo North Sea crossing · aboard Sophie</p>
+          <p class="about-image-caption">Sharon Foulston · Wales</p>
         </div>
         <div class="about-content">
           <p class="label about-label">About Sharon</p>
@@ -890,6 +923,10 @@
               </div>
             </li>
           </ul>
+          <div class="speaking-photo reveal reveal-delay-3">
+            <img src="images/IMG_0101.jpg" alt="Sharon Foulston on panel at Smart Bridges conference">
+            <p class="speaking-photo-cap">Smart Bridges · Panel Discussion · Mental Health in Families</p>
+          </div>
         </div>
         <div class="speaking-right reveal reveal-delay-1">
           <p class="label audiences-label">Sharon speaks to</p>
@@ -1018,6 +1055,10 @@
           <p>The model is simple. Free content on YouTube gives you access to Sharon's thinking as it develops. A paid membership unlocks the fuller picture — extended teachings, exclusive sessions, and a community of people doing the same work.</p>
           <div class="collective-quote">
             <p>"There is more to this than a talk can hold. The Collective is where the real conversation continues."</p>
+          </div>
+          <div class="collective-img-strip">
+            <img src="images/IMG_2221.jpeg" alt="Sunset through trees — a path forward">
+            <img src="images/IMG_7442.jpeg" alt="Sharon with members of her community" class="rotated">
           </div>
         </div>
 
